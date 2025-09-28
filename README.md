@@ -56,6 +56,28 @@ uv run -p 3.8 python -m stock ipo schedule --interval-hours 6 --token "$TUSHARE_
 
 > 说明：TuShare `new_share` 字段中，`funds`（募集资金，单位通常为“亿元”）与 `amount`（发行数量，单位通常为“万股”）若存在会被聚合求和；聚合时按每个月统计：`ipo_count`（数量）、`issue_amount_sum`（发行数量总和）、`funds_sum`（募集资金总和）。
 
+## 消息推送（Server酱 Turbo）
+
+`ipo once` 执行后，会在“当前月份”的统计满足任一条件时推送微信订阅号通知：
+
+- `ipo_count > 10`，或
+- `funds_sum > 100`
+
+配置 SendKey（任选其一）：
+
+```bash
+export SCT_SENDKEY=你的Server酱SendKey
+# 或
+export SERVERCHAN_SENDKEY=你的Server酱SendKey
+```
+
+推送内容：
+
+- 标题：`YYYY-MM IPO提示`（标题最大 32 字符）
+- 内容：月份、上市家数、募集资金合计、触发条件（支持 Markdown，最大 32KB）
+
+> 接口：`https://sctapi.ftqq.com/<SendKey>.send?title=...&desp=...`
+
 ## 使用 uvx 运行开发工具
 
 无需在本地环境安装工具，直接通过 uvx 执行：

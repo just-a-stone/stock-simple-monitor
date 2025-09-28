@@ -5,6 +5,7 @@ import argparse
 from typing import List, Optional, Tuple
 
 from .ipo import run_once
+from .notify import notify_monthly_thresholds
 
 
 def _default_paths() -> Tuple[str, str]:
@@ -85,6 +86,18 @@ def main(argv: Optional[List[str]] = None) -> int:
             else:
                 # Print quick monthly summary tail
                 print(res.tail(60).to_string(index=False))
+                # Push notification if thresholds are exceeded for current month
+                notify_result = notify_monthly_thresholds(res)
+                if notify_result is None:
+                    pass  # No trigger or no data for current month
+                else:
+                    ok = notify_result.get("ok")
+                    status = notify_result.get("status")
+                    if ok:
+                        print(f"[stock] Notified via Server酱 (status={status}).")
+                    else:
+                        err = notify_result.get("error")
+                        print(f"[stock] Notification failed: status={status}, error={err}")
             return 0
         else:
             return _run_schedule(token, args.start, args.end, raw_out, monthly_out, args.interval_hours, args.at)
