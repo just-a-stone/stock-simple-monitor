@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
 import urllib.parse
 import urllib.request
@@ -16,11 +15,15 @@ MAX_DESP_BYTES = 32 * 1024  # 32KB in bytes
 def _get_sendkey(explicit: Optional[str] = None) -> Optional[str]:
     """Resolve Server酱 Turbo SendKey.
 
-    Precedence: explicit arg -> env `SCT_SENDKEY` -> env `SERVERCHAN_SENDKEY`.
+    Precedence: explicit arg -> .env `SCT_SENDKEY` -> .env `SERVERCHAN_SENDKEY`.
     """
     if explicit:
         return explicit.strip()
-    return os.getenv("SCT_SENDKEY") or os.getenv("SERVERCHAN_SENDKEY")
+    try:
+        from .config import get_env
+    except Exception:
+        get_env = lambda k, d=None: d  # fallback no value
+    return get_env("SCT_SENDKEY") or get_env("SERVERCHAN_SENDKEY")
 
 
 def _truncate_title(title: str) -> str:
@@ -134,4 +137,3 @@ def notify_monthly_thresholds(
     desp = "\n".join(desp_lines)
 
     return send_wechat(title=title, desp=desp, sendkey=sendkey)
-

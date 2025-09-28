@@ -6,6 +6,7 @@ from typing import List, Optional, Tuple
 
 from .ipo import run_once
 from .notify import notify_monthly_thresholds
+from .config import get_env
 
 
 def _default_paths() -> Tuple[str, str]:
@@ -22,7 +23,8 @@ def _parse_args(argv: List[str]) -> argparse.Namespace:
     # ipo command
     ipo = sub.add_parser("ipo", help="Fetch and analyze IPO data")
     ipo.add_argument("mode", choices=["once", "schedule"], nargs="?", default="once")
-    ipo.add_argument("--token", dest="token", default=os.getenv("TUSHARE_TOKEN"))
+    # Token will be read from project .env if not provided explicitly
+    ipo.add_argument("--token", dest="token", default=None)
     ipo.add_argument("--start", dest="start", default=None, help="YYYYMMDD (default: 5 years ago)")
     ipo.add_argument("--end", dest="end", default=None, help="YYYYMMDD (default: today)")
     raw, monthly = _default_paths()
@@ -73,9 +75,9 @@ def _run_schedule(token: str, start: Optional[str], end: Optional[str], raw: str
 def main(argv: Optional[List[str]] = None) -> int:
     args = _parse_args(list(sys.argv[1:] if argv is None else argv))
     if args.cmd == "ipo" or args.cmd is None:
-        token = args.token
+        token = args.token or get_env("TUSHARE_TOKEN")
         if not token:
-            print("[stock] Please provide TuShare token via --token or TUSHARE_TOKEN env var.")
+            print("[stock] Please set TUSHARE_TOKEN in project .env or pass --token.")
             return 2
         raw_out = args.raw_out
         monthly_out = args.monthly_out

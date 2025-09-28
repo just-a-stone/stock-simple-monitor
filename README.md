@@ -22,12 +22,16 @@
 
 功能：定时拉取近 5 年新股 IPO 数据（TuShare `new_share` 接口），并按月统计发行数量与募集金额的变化趋势，结果输出为 CSV。
 
-1) 配置 TuShare Token（任选其一）
+1) 配置 TuShare Token（项目根目录 `.env`）
 
-```bash
-export TUSHARE_TOKEN=你的token
-# 或在命令中显式传入 --token
+在工程根目录创建 `.env` 文件，示例：
+
 ```
+TUSHARE_TOKEN=你的tushare_token
+SCT_SENDKEY=你的_server酱_SendKey   # 可选，用于微信通知
+```
+
+也可在命令中显式传入 `--token`，优先级高于 `.env`。
 
 2) 运行一次（默认近 5 年）
 
@@ -63,13 +67,7 @@ uv run -p 3.8 python -m stock ipo schedule --interval-hours 6 --token "$TUSHARE_
 - `ipo_count > 10`，或
 - `funds_sum > 100`
 
-配置 SendKey（任选其一）：
-
-```bash
-export SCT_SENDKEY=你的Server酱SendKey
-# 或
-export SERVERCHAN_SENDKEY=你的Server酱SendKey
-```
+配置 SendKey：在项目根目录 `.env` 中设置 `SCT_SENDKEY`（或 `SERVERCHAN_SENDKEY`）。
 
 推送内容：
 
