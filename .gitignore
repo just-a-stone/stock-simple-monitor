@@ -40,6 +40,12 @@ htmlcov/
 .idea/
 .vscode/
 
+# Environment files (keep example tracked, ignore real secrets)
+.env
+.env.*
+.envrc
+!.env.example
+
 # Project data (keep folder, ignore contents)
 data/
 !data/.gitkeep
