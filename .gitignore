@@ -50,3 +50,4 @@ htmlcov/
 data/
 !data/.gitkeep
 !data/README.md
+logs/
