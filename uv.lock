@@ -212,7 +212,7 @@ wheels = [
 ]
 
 [[package]]
-name = "stock"
+name = "stock-simple-monitor"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

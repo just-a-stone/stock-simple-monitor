@@ -28,7 +28,10 @@ def _parse_dotenv(content: str) -> Dict[str, str]:
             continue
         key, val = line.split("=", 1)
         key = key.strip()
-        val = val.strip().strip("\"').strip()
+        # Trim surrounding quotes if present (both single and double)
+        val = val.strip()
+        if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
+            val = val[1:-1]
         env[key] = val
     return env
 
@@ -54,4 +57,3 @@ def load_dotenv(refresh: bool = False) -> Dict[str, str]:
 def get_env(name: str, default: Optional[str] = None) -> Optional[str]:
     env = load_dotenv()
     return env.get(name, default)
-
