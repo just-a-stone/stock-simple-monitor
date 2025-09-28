@@ -1,4 +1,4 @@
-# stock
+# stock-simple-monitor
 
 使用 uv/uvx 初始化的 Python 工程骨架，固定 Python 版本为 3.8。
 
@@ -8,6 +8,10 @@
   ```bash
   uv run -p 3.8 python -m stock -- hello
   ```
+  或在安装后使用 CLI 名称：
+  ```bash
+  stock-simple-monitor -- hello
+  ```
 
 - 本地虚拟环境（推荐，位于 `.venv/`）：
   ```bash
@@ -16,6 +20,8 @@
   source .venv/bin/activate  # Windows 使用: .venv\\Scripts\\activate
   uv pip install -e .
   python -m stock -- hello
+  # 或
+  stock-simple-monitor -- hello
   ```
 
 ## IPO 数据抓取与分析（TuShare）
@@ -37,6 +43,8 @@ SCT_SENDKEY=你的_server酱_SendKey   # 可选，用于微信通知
 
 ```bash
 uv run -p 3.8 python -m stock ipo once --token "$TUSHARE_TOKEN"
+# 已安装情况下也可：
+# stock-simple-monitor ipo once --token "$TUSHARE_TOKEN"
 # 自定义时间范围（YYYYMMDD）
 uv run -p 3.8 python -m stock ipo once --start 20200101 --end 20251231 --token "$TUSHARE_TOKEN"
 ```
@@ -50,6 +58,8 @@ uv run -p 3.8 python -m stock ipo once --start 20200101 --end 20251231 --token "
 ```bash
 # 每 24 小时运行一次（默认）
 uv run -p 3.8 python -m stock ipo schedule --token "$TUSHARE_TOKEN"
+# 或
+# stock-simple-monitor ipo schedule --token "$TUSHARE_TOKEN"
 
 # 或者每天固定时间（本地时区）
 uv run -p 3.8 python -m stock ipo schedule --at 18:30 --token "$TUSHARE_TOKEN"

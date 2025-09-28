@@ -105,7 +105,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             return _run_schedule(token, args.start, args.end, raw_out, monthly_out, args.interval_hours, args.at)
 
     # Default info
-    print("stock project is set up. Try 'python -m stock ipo once'.")
+    print("stock-simple-monitor is set up. Try 'python -m stock ipo once' or 'stock-simple-monitor ipo once' after installation.")
     return 0
 
 

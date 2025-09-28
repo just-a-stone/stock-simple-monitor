@@ -1,5 +1,5 @@
 [project]
-name = "stock"
+name = "stock-simple-monitor"
 version = "0.1.0"
 description = "Python project scaffold managed with uv/uvx"
 readme = "README.md"
@@ -13,6 +13,8 @@ dependencies = [
 ]
 
 [project.scripts]
+stock-simple-monitor = "stock.__main__:main"
+# keep legacy alias for convenience
 stock = "stock.__main__:main"
 
 [build-system]
