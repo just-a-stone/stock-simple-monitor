@@ -24,7 +24,7 @@
 
 1) 配置 TuShare Token（项目根目录 `.env`）
 
-在工程根目录创建 `.env` 文件，示例：
+在工程根目录创建 `.env` 文件（可直接复制 `.env.example` 为 `.env` 并填写实际值），示例：
 
 ```
 TUSHARE_TOKEN=你的tushare_token
