@@ -1,0 +1,26 @@
+[project]
+name = "stock"
+version = "0.1.0"
+description = "Python project scaffold managed with uv/uvx"
+readme = "README.md"
+requires-python = "==3.8.*"
+authors = []
+dependencies = [
+    "tushare>=1.2.0",
+    "pandas<2.1.0",  # ensure Python 3.8 compatibility
+    "numpy>=1.21,<2.0",
+    "schedule>=1.2.0",
+]
+
+[project.scripts]
+stock = "stock.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
